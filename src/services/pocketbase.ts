@@ -1,19 +1,11 @@
-import { type Schema } from "./database.d";
-import { TypedPocketBase } from "typed-pocketbase";
-import PocketBase, { RecordService } from "pocketbase";
-
-interface PB extends PocketBase {
-  collection(idOrName: string): RecordService<Schema[keyof Schema]["response"]>;
-}
+import { type TypedPocketBase } from "../../pocketbase-types"
+import PocketBase from "pocketbase";
 
 /**
  * use this for standard pocketbase
  */
-const pb = new PocketBase(import.meta.env.VITE_PB_URL || "/") as PB;
+const pb = new PocketBase(import.meta.env.VITE_PB_URL || "/") as TypedPocketBase;
 
-/**
- * use this for typesafety
- */
-const db = new TypedPocketBase<Schema>(import.meta.env.VITE_PB_URL || "/");
+pb.autoCancellation(false);
 
-export { pb, db };
+export { pb };
