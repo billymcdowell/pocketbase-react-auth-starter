@@ -4,7 +4,7 @@ import { RegisterForm } from "@/components/interfaces/auth/auth";
 export const Route = createFileRoute("/auth/register")({
   component: RegisterPage,
   beforeLoad: ({ context }) => {
-    if (context.isAuthenticated) throw redirect({ to: "/" });
+    if (context.isAuthenticated) throw redirect({ to: "/dashboard" });
   },
 });
 

@@ -4,7 +4,7 @@ import { LoginForm } from "@/components/interfaces/auth/auth";
 export const Route = createFileRoute("/auth/login")({
   component: LoginPage,
   beforeLoad: ({ context }) => {
-    if (context.isAuthenticated) throw redirect({ to: "/" });
+    if (context.isAuthenticated) throw redirect({ to: "/dashboard" });
   },
 });
 

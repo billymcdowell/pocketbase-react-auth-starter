@@ -11,6 +11,8 @@ export enum Collections {
 	Mfas = "_mfas",
 	Otps = "_otps",
 	Superusers = "_superusers",
+	Invites = "invites",
+	Organisations = "organisations",
 	Users = "users",
 }
 
@@ -92,13 +94,38 @@ export type SuperusersRecord = {
 	verified?: boolean
 }
 
+export enum InvitesRoleOptions {
+	"owner" = "owner",
+	"admin" = "admin",
+	"member" = "member",
+}
+export type InvitesRecord = {
+	created: IsoAutoDateString
+	email?: string
+	id: string
+	org?: RecordIdString
+	role?: InvitesRoleOptions
+	token?: string
+	updated: IsoAutoDateString
+}
+
+export type OrganisationsRecord = {
+	created: IsoAutoDateString
+	id: string
+	name?: string
+	slug?: string
+	updated: IsoAutoDateString
+}
+
 export type UsersRecord = {
 	avatar?: FileNameString
 	created: IsoAutoDateString
+	current_org: RecordIdString
 	email: string
 	emailVisibility?: boolean
 	id: string
 	name?: string
+	orgs: RecordIdString[]
 	password: string
 	tokenKey: string
 	updated: IsoAutoDateString
@@ -111,6 +138,8 @@ export type ExternalauthsResponse<Texpand = unknown> = Required<ExternalauthsRec
 export type MfasResponse<Texpand = unknown> = Required<MfasRecord> & BaseSystemFields<Texpand>
 export type OtpsResponse<Texpand = unknown> = Required<OtpsRecord> & BaseSystemFields<Texpand>
 export type SuperusersResponse<Texpand = unknown> = Required<SuperusersRecord> & AuthSystemFields<Texpand>
+export type InvitesResponse<Texpand = unknown> = Required<InvitesRecord> & BaseSystemFields<Texpand>
+export type OrganisationsResponse<Texpand = unknown> = Required<OrganisationsRecord> & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
 
 // Types containing all Records and Responses, useful for creating typing helper functions
@@ -121,6 +150,8 @@ export type CollectionRecords = {
 	_mfas: MfasRecord
 	_otps: OtpsRecord
 	_superusers: SuperusersRecord
+	invites: InvitesRecord
+	organisations: OrganisationsRecord
 	users: UsersRecord
 }
 
@@ -130,6 +161,8 @@ export type CollectionResponses = {
 	_mfas: MfasResponse
 	_otps: OtpsResponse
 	_superusers: SuperusersResponse
+	invites: InvitesResponse
+	organisations: OrganisationsResponse
 	users: UsersResponse
 }
 

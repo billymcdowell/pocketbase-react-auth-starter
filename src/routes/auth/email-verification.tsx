@@ -7,7 +7,7 @@ export const Route = createFileRoute("/auth/email-verification")({
     email: search.email?.toString(),
   }),
   beforeLoad: ({ context }) => {
-    if (context.isAuthenticated) throw redirect({ to: "/" });
+    if (context.isAuthenticated) throw redirect({ to: "/dashboard" });
   },
 });
 

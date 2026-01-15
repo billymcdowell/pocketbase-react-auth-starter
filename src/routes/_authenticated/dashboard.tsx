@@ -1,6 +1,6 @@
 import { useRealtime } from "@/components/hooks/use-realtime";
 import { pb } from "@/services/pocketbase";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   component: DashboardPage,
@@ -8,16 +8,24 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
 
 function DashboardPage() {
   const { data: users, loading, error } = useRealtime('users');
-
+  const router = useRouter();
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
+  const logout = () => {
+    pb.authStore.clear();
+    router.navigate({ to: "/auth/login" });
+  };
+
+
+  console.log(pb.authStore.model);
   console.log(users);
-
-  
-
   return <div>
     <h1>Dashboard</h1>
+    <button onClick={logout}>Sign Out</button>
+    <p>Current Organization: {pb.authStore.model?.current_org}</p>
+    <p>Organizations: {pb.authStore.model?.orgs.join(", ")}</p>
+
     <ul>
       {users.map((user) => (
         <li key={user.id}>

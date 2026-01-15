@@ -13,7 +13,7 @@ function IndexPage() {
   const logout = () => {
     pb.authStore.clear();
 
-    router.navigate({ to: "/" });
+    router.navigate({ to: "/auth/login" });
   };
 
   return (
